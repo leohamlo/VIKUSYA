@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Письмо для друга 💌</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@400;600&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fff0f6;
+            --card-bg: #fff6fa;
+            --text: #a8325e;
+            --text-light: #c97a9a;
+            --accent: #ffb6b9;
+            --accent-soft: #ffe0e6;
+            --rose: #f7c1d9;
+            --sage: #e2e2f6;
+            --shadow: 0 4px 20px rgba(200, 80, 120, 0.10);
+            --shadow-hover: 0 8px 32px rgba(200, 80, 120, 0.18);
+            --radius: 20px;
+            --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Raleway', system-ui, sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            background-color: var(--bg);
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(255, 182, 185, 0.25) 0%, transparent 55%),
+                radial-gradient(ellipse at 80% 5%, rgba(247, 193, 217, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse at 30% 90%, rgba(255, 224, 230, 0.2) 0%, transparent 55%),
+                radial-gradient(ellipse at 70% 95%, rgba(255, 182, 185, 0.15) 0%, transparent 55%),
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255, 182, 185, 0.04) 2px, rgba(255, 182, 185, 0.04) 4px),
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600"><text x="40" y="80" font-size="38" opacity="0.5" transform="rotate(-18 40 80)">💖</text><text x="500" y="120" font-size="34" opacity="0.45" transform="rotate(12 500 120)">✨</text><text x="120" y="300" font-size="28" opacity="0.5" transform="rotate(-8 120 300)">🌸</text><text x="60" y="500" font-size="40" opacity="0.4" transform="rotate(22 60 500)">💫</text><text x="420" y="550" font-size="44" opacity="0.5" transform="rotate(-25 420 550)">💛</text><text x="320" y="400" font-size="30" opacity="0.45" transform="rotate(8 320 400)">🌷</text><text x="500" y="400" font-size="34" opacity="0.5" transform="rotate(-12 500 400)">⭐</text><text x="200" y="580" font-size="38" opacity="0.4" transform="rotate(16 200 580)">💗</text><text x="350" y="60" font-size="32" opacity="0.5" transform="rotate(-10 350 60)">🦋</text><text x="550" y="480" font-size="40" opacity="0.45" transform="rotate(20 550 480)">🌟</text></svg>');
+            background-size: cover, cover, cover, cover, cover, 600px 600px;
+            background-repeat: repeat;
+            background-attachment: fixed;
+        }
+
+        /* Скрытое аудио */
+        #bg-audio {
+            display: none;
+        }
+
+        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 24px 80px;
+        }
+
+        /* ===== ШАПКА ===== */
+        .letter-header {
+            text-align: center;
+            padding: 50px 30px 40px;
+            position: relative;
+        }
+        .letter-header .envelope-icon {
+            font-size: 56px;
+            display: block;
+            margin-bottom: 16px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+        .letter-header h1 {
+            font-family: 'Cormorant Garamond', 'Georgia', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: 0.02em;
+            margin-bottom: 8px;
+        }
+        .letter-header .subtitle {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: var(--accent);
+            letter-spacing: 0.03em;
+        }
+        .decorative-line {
+            display: block;
+            margin: 20px auto 0;
+            font-size: 18px;
+            letter-spacing: 8px;
+            color: var(--accent-soft);
+        }
+        .section-divider {
+            text-align: center;
+            margin: 10px 0 30px;
+            font-size: 14px;
+            letter-spacing: 10px;
+            color: var(--accent-soft);
+            user-select: none;
+        }
+
+        .memory-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 28px;
+            margin-bottom: 48px;
+        }
+        .memory-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .photo-side {
+            flex: 0 0 42%;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .text-side {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .memory-row:not(:nth-child(even)) .text-side {
+            transform: translateX(50px);
+        }
+        .memory-row:nth-child(even) .text-side {
+            transform: translateX(-50px);
+        }
+        .memory-row.visible .text-side {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* ===== ФОТО РАМКА (АВТО-РАЗМЕР) ===== */
+        .photo-frame {
+            width: 100%;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: linear-gradient(135deg, #f5ede4 0%, #ede0d4 40%, #f0e5d8 100%);
+            position: relative;
+            transition: var(--transition);
+            border: 3px dashed var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 8px;
+            /* Минимальная высота для плейсхолдера */
+            min-height: 200px;
+        }
+        .photo-frame:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-3px);
+            border-color: var(--accent);
+        }
+        /* Картинка сама задаёт размер */
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: calc(var(--radius) - 3px);
+        }
+        /* Плейсхолдер (когда нет фото) */
+        .photo-frame .placeholder-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--accent);
+            opacity: 0.7;
+            pointer-events: none;
+        }
+        .photo-frame .placeholder-icon {
+            font-size: 2rem;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .photo-frame .placeholder-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            pointer-events: none;
+        }
+        /* Скрываем плейсхолдер когда есть фото */
+        .photo-frame.has-image .placeholder-number,
+        .photo-frame.has-image .placeholder-icon,
+        .photo-frame.has-image .placeholder-label {
+            display: none;
+        }
+        .photo-caption {
+            margin-top: 10px;
+            text-align: center;
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            opacity: 0.8;
+            min-height: 24px;
+            transition: opacity 0.4s;
+        }
+        .photo-caption::before {
+            content: '— ';
+            opacity: 0.6;
+        }
+        .photo-caption:empty::before {
+            content: '';
+        }
+
+        /* ===== ТЕКСТОВАЯ КАРТОЧКА ===== */
+        .text-card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 28px 26px;
+            box-shadow: var(--shadow);
+            position: relative;
+            width: 100%;
+            transition: var(--transition);
+            border-left: 4px solid transparent;
+        }
+        .text-card:hover {
+            box-shadow: var(--shadow-hover);
+            border-left-color: var(--accent);
+        }
+        .text-card::after {
+            content: '💛';
+            position: absolute;
+            bottom: 12px;
+            right: 16px;
+            font-size: 0.9rem;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        .text-placeholder {
+            color: #b0a094;
+            font-style: italic;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            min-height: 80px;
+        }
+        .user-text {
+            color: var(--text);
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* ===== ЗАКРЫТИЕ ПИСЬМА ===== */
+        .letter-closing {
+            text-align: center;
+            padding: 40px 20px 20px;
+            margin-top: 30px;
+        }
+        .letter-closing .closing-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            color: var(--text);
+            font-style: italic;
+            margin-bottom: 6px;
+        }
+        .letter-closing .signature {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: var(--accent);
+            letter-spacing: 0.04em;
+        }
+        .heart-row {
+            font-size: 18px;
+            letter-spacing: 6px;
+            margin-top: 12px;
+            user-select: none;
+        }
+
+        /* ===== МОБИЛЬНАЯ АДАПТАЦИЯ ===== */
+        @media (max-width: 750px) {
+            .memory-row,
+            .memory-row:nth-child(even) {
+                flex-direction: column;
+                gap: 16px;
+                margin-bottom: 36px;
+            }
+            .photo-side { width: 100%; }
+            .text-side {
+                width: 100%;
+                transform: translateY(30px) !important;
+            }
+            .memory-row.visible .text-side {
+                transform: translateY(0) !important;
+            }
+            .main-container { padding: 16px 12px 60px; }
+        }
+    </style>
+</head>
+<body>
+    <audio id="bg-audio" loop autoplay>
+        <source src="audio/music.mp3" type="audio/mpeg">
+    </audio>
+    <button id="play-audio-btn" style="display:none;position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:1000;padding:14px 32px;background:var(--accent);color:#fff;border:none;border-radius:30px;box-shadow:0 2px 12px rgba(200,80,120,0.10);font-size:1.1rem;cursor:pointer;transition:background 0.3s;">Включить музыку 💖</button>
+
+    <main class="main-container">
+
+        <!-- ===== ШАПКА ===== -->
+        <header class="letter-header">
+            <span class="envelope-icon">💌</span>
+            <h1>Письмо тебе</h1>
+            <p class="subtitle">— моей Любимой Кисе❤️! —</p>
+            <span class="decorative-line">✦ ✦ ✦</span>
+        </header>
+
+        <div class="section-divider">• • •</div>
+
+        <!-- ===== ФОТО 1 ===== -->
+        <section class="memory-row">
+            <div class="photo-side">
+                <div class="photo-frame" id="frame1">
+                    <img src="images/photo1.jpg">
+                </div>
+            </div>
+            <div class="text-side">
+                <div class="text-card">
+                    <p class="text-placeholder">ЙОУ это что фотка из-за которой моей кисе всё ещё больше всего стыдно?)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ФОТО 2 ===== -->
+        <section class="memory-row">
+            <div class="photo-side">
+                <div class="photo-frame" id="frame2">
+                    <img src="images/photo2.jpg">
+                </div>
+                <div class="photo-caption"></div>
+            </div>
+            <div class="text-side">
+                <div class="text-card">
+                    <p class="text-placeholder">ЙОУ ЭТО ЧТО КАК ВСЕГДА КРАСИВАЯ МОЯ МЫШКА^_^</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ФОТО 3 ===== -->
+        <section class="memory-row">
+            <div class="photo-side">
+                <div class="photo-frame" id="frame3">
+                    <img src="images/photo3.jpg">
+                </div>
+                <div class="photo-caption"></div>
+            </div>
+            <div class="text-side">
+                <div class="text-card">
+                    <p class="text-placeholder">Йоу это что моя ВИКУЛЯ решила сделать имбейшую фоточку(Как всегда классно получилось💕)</p>
+                </div>
+            </div>
+        </section>
+        <!-- ===== ФОТО 6 ===== -->
+        <section class="memory-row">
+            <div class="photo-side">
+                <div class="photo-frame" id="frame6">
+                    <img src="images/photo4.jpg">
+                </div>
+                <div class="photo-caption"></div>
+            </div>
+            <div class="text-side">
+                <div class="text-card">
+                    <p class="text-placeholder">ЙОУ ЭТО ФОТО чтО БЫЛО СДЕЛано На мОй телефон и я не зНАл💗</p>
+                </div>
+            </div>
+        </section>
+        <!-- ===== ФОТО 8 ===== -->
+        <section class="memory-row">
+            <div class="photo-side">
+                <div class="photo-frame" id="frame8">
+                    <img src="images/photo5.jpg">
+                </div>
+                <div class="photo-caption"></div>
+            </div>
+            <div class="text-side">
+                <div class="text-card">
+                    <p class="text-placeholder">ММММ?МХМ отдай!💝</p>
+                </div>
+            </div>
+        </section>
+        <!-- ===== ФОТО 9 ===== -->
+        <section class="memory-row">
+            <div class="photo-side">
+                <div class="photo-frame" id="frame9">
+                    <img src="images/photo6.jpg">
+                </div>
+                <div class="photo-caption"></div>
+            </div>
+            <div class="text-side">
+                <div class="text-card">
+                    <p class="text-placeholder">ЙОУ ЭТО ЧТО Я НА МОЁМ НАШЕМ ПЕРВОМ СОВМЕСТНОМ КОНЦЕРТЕ?💓</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== ЗАКРЫТИЕ ===== -->
+        <section class="letter-closing">
+            <p class="closing-text">Спасибо, что ты есть в моей жизни</p>
+            <p class="signature">— Твой БОЙ💋</p>
+            <div class="heart-row">💛 💛 💛</div>
+        </section>
+    </main>
+
+    <script>
+        (function() {
+            // ===== АУДИО (громкость 3%, автозапуск с поддержкой мобильных) =====
+            const audio = document.getElementById('bg-audio');
+            const playBtn = document.getElementById('play-audio-btn');
+            audio.volume = 0.03;
+
+            function tryPlayAudio() {
+                audio.play().then(() => {
+                    playBtn.style.display = 'none';
+                }).catch(() => {
+                    // Показываем кнопку, если не удалось автозапустить
+                    playBtn.style.display = 'block';
+                });
+            }
+
+            // Попытка автозапуска
+            tryPlayAudio();
+
+            // Кнопка для ручного запуска
+            playBtn.addEventListener('click', function() {
+                audio.play();
+                playBtn.style.display = 'none';
+            });
+
+            // Для мобильных: повторная попытка при первом взаимодействии
+            const startOnInteraction = () => {
+                tryPlayAudio();
+                document.removeEventListener('click', startOnInteraction);
+                document.removeEventListener('touchstart', startOnInteraction);
+            };
+            document.addEventListener('click', startOnInteraction);
+            document.addEventListener('touchstart', startOnInteraction);
+
+            // ===== АВТО-ОПРЕДЕЛЕНИЕ ФОТО В РАМКАХ =====
+            document.querySelectorAll('.photo-frame img').forEach(img => {
+                if (img.complete && img.naturalWidth > 0) {
+                    img.parentElement.classList.add('has-image');
+                } else {
+                    img.addEventListener('load', () => {
+                        img.parentElement.classList.add('has-image');
+                    });
+                }
+            });
+
+            // ===== АНИМАЦИЯ ПОЯВЛЕНИЯ СТРОК =====
+            const rows = document.querySelectorAll('.memory-row');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.2, rootMargin: '0px 0px -30px 0px' });
+
+            rows.forEach(row => observer.observe(row));
+            setTimeout(() => {
+                if (rows.length > 0) {
+                    const rect = rows[0].getBoundingClientRect();
+                    if (rect.top < window.innerHeight) rows[0].classList.add('visible');
+                }
+            }, 200);
+        })();
+    </script>
+</body>
+</html>
